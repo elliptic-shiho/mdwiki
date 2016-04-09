@@ -272,7 +272,7 @@
     var navMD = '';
     $.md.NavigationDfd = $.Deferred();
     var ajaxReq = {
-        url: 'navigation.md',
+        url: 'content/navigation.md',
         dataType: 'text'
     };
     $.ajax(ajaxReq).done(function(data) {
@@ -478,7 +478,7 @@
         } else {
             href = window.location.hash.substring(1);
         }
-        href = decodeURIComponent(href);
+        href = "content/" + decodeURIComponent(href);
 
         // extract possible in-page anchor
         var ex_pos = href.indexOf('#');
