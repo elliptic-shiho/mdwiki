@@ -77,6 +77,9 @@
     };
     $.md.util.getInpageAnchorHref = function (text, href) {
         href = href || $.md.mainHref;
+        if (href.startsWith("content/")) {
+          href = href.replace("content/", "");
+        }
         var subhash = $.md.util.getInpageAnchorText(text);
         return '#!' + href + '#' + subhash;
     };
