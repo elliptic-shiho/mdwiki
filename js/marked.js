@@ -180,7 +180,7 @@ Lexer.prototype.token = function(src, top) {
       src = src.substring(cap[0].length);
       this.tokens.push({
         type: 'code',
-        lang: cap[2],
+        lang: cap[2].replace(/=/g, ""),
         text: cap[3]
       });
       continue;
