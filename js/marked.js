@@ -20,6 +20,7 @@ var block = {
   lheading: /^([^\n]+)\n *(=|-){3,} *\n*/,
   blockquote: /^( *>[^\n]+(\n[^\n]+)*\n*)+/,
   list: /^( *)(bull) [\s\S]+?(?:hr|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
+  dlist: /^(\s*):\s*\[((?:(?!\]).)+)\]\s*(.+)(?:\n*|\s*$)/,
   html: /^ *(?:comment|closed|closing) *(?:\n{2,}|\s*$)/,
   def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,
   table: noop,
@@ -64,6 +65,7 @@ block.paragraph = replace(block.paragraph)
  */
 
 block.normal = merge({}, block);
+console.log(block.normal);
 
 /**
  * GFM Block Grammar
@@ -346,6 +348,97 @@ Lexer.prototype.token = function(src, top) {
         type: 'list_end'
       });
 
+      continue;
+    }
+
+    // definition list
+    if (cap = this.rules.dlist.exec(src)) {
+
+      this.tokens.push({
+        type: 'dlist_start'
+      });
+
+      do {
+        src = src.substring(cap[0].length);
+        this.tokens.push({
+          type: 'dlist_item',
+          name: cap[2],
+          text: cap[3]
+        });
+      } while(cap = this.rules.dlist.exec(src));
+
+      this.tokens.push({
+        type: 'dlist_end'
+      });
+
+      /*
+
+      this.tokens.push({
+        type: 'list_start',
+        ordered: bull.length > 1
+      });
+
+      // Get each top-level item.
+      cap = cap[0].match(this.rules.item);
+
+      next = false;
+      l = cap.length;
+      i = 0;
+
+      for (; i < l; i++) {
+        item = cap[i];
+
+        // Remove the list item's bullet
+        // so it is seen as the next token.
+        space = item.length;
+        item = item.replace(/^ *([*+-]|\d+\.) +/, '');
+
+        // Outdent whatever the
+        // list item contains. Hacky.
+        if (~item.indexOf('\n ')) {
+          space -= item.length;
+          item = !this.options.pedantic
+            ? item.replace(new RegExp('^ {1,' + space + '}', 'gm'), '')
+            : item.replace(/^ {1,4}/gm, '');
+        }
+
+        // Determine whether the next list item belongs here.
+        // Backpedal if it does not belong in this list.
+        if (this.options.smartLists && i !== l - 1) {
+          b = block.bullet.exec(cap[i+1])[0];
+          if (bull !== b && !(bull.length > 1 && b.length > 1)) {
+            src = cap.slice(i + 1).join('\n') + src;
+            i = l - 1;
+          }
+        }
+
+        // Determine whether item is loose or not.
+        // Use: /(^|\n)(?! )[^\n]+\n\n(?!\s*$)/
+        // for discount behavior.
+        loose = next || /\n\n(?!\s*$)/.test(item);
+        if (i !== l - 1) {
+          next = item[item.length-1] === '\n';
+          if (!loose) loose = next;
+        }
+
+        this.tokens.push({
+          type: loose
+            ? 'loose_item_start'
+            : 'list_item_start'
+        });
+
+        // Recurse.
+        this.token(item, false);
+
+        this.tokens.push({
+          type: 'list_item_end'
+        });
+      }
+
+      this.tokens.push({
+        type: 'list_end'
+      });
+      */
       continue;
     }
 
@@ -929,6 +1022,23 @@ Parser.prototype.tok = function() {
         + body
         + '</blockquote>\n';
     }
+
+    case 'dlist_start': {
+      var body = '';
+      while (this.next().type !== 'dlist_end') {
+        body += this.tok();
+      }
+      return '<dl class="dl-horizontal">' + body + '</dl>';
+    }
+
+    case 'dlist_item': {
+      return '<dt>'
+        + this.token.name
+        + '</dt><dd>\n'
+        + this.token.text
+        + '</dd>\n';
+    }
+
     case 'list_start': {
       var type = this.token.ordered ? 'ol' : 'ul'
         , body = '';
