@@ -178,9 +178,13 @@ Lexer.prototype.token = function(src, top) {
     // fences (gfm)
     if (cap = this.rules.fences.exec(src)) {
       src = src.substring(cap[0].length);
+      var lang = cap[2];
+      if (lang !== undefined) {
+        lang = lang.replace(/=/g, "");
+      }
       this.tokens.push({
         type: 'code',
-        lang: cap[2].replace(/=/g, ""),
+        lang: lang,
         text: cap[3]
       });
       continue;
