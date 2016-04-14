@@ -180,13 +180,19 @@ Lexer.prototype.token = function(src, top) {
     if (cap = this.rules.fences.exec(src)) {
       src = src.substring(cap[0].length);
       var lang = cap[2];
+      var is_linenumber = false;
       if (lang !== undefined) {
-        lang = lang.replace(/=/g, "");
+        var t = lang.replace(/=$/g, "");
+        if (t !== lang) {
+          is_linenumber = true;
+        }
+        lang = t;
       }
       this.tokens.push({
         type: 'code',
         lang: lang,
-        text: cap[3]
+        text: cap[3],
+        is_linenumber: is_linenumber
       });
       continue;
     }
@@ -898,7 +904,8 @@ Parser.prototype.tok = function() {
         ? ' class="'
         + this.options.langPrefix
         + this.token.lang
-        + '"'
+        + '" data-is-linenumber='
+        + this.token.is_linenumber
         : '')
         + '>'
         + this.token.text

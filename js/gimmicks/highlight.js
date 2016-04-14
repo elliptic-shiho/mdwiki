@@ -23,6 +23,11 @@
             $this.removeClass(classes);
             $this.addClass(lang);
             var x = hljs.highlightBlock($this[0]);
+            if ($this.data('is-linenumber') === true) {
+              hljs.lineNumbersBlock($this[0]);
+              console.log(hljs.lineNumbersBlock);
+              console.log($this[0]);
+            }
         });
     }
 

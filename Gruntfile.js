@@ -69,6 +69,7 @@ module.exports = function(grunt) {
             'extlib/js/jquery-1.8.3.min.js',
             'extlib/js/bootstrap-3.0.0.min.js',
             'extlib/js/highlight-7.3.pack.min.js',
+            'extlib/js/highlightjs-line-numbers.min.js',
         ],
         externalCssFiles: [
             'extlib/css/highlight.github.css',
@@ -80,7 +81,7 @@ module.exports = function(grunt) {
             'ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js',
             'netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js',
             'yandex.st/highlightjs/7.3/highlight.min.js',
-            'cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+            'github.com/wcoder/highlightjs-line-numbers.js',
         ],
         externalCssRefs: [
             'netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css',
