@@ -256,10 +256,15 @@
                 if ($.md.util.hasMarkdownFileExtension (url))
                     return '#!' + url;
                 else
-                    return url;
+                    return 'content/' + url;
             }
 
             var newHref = baseUrl + href;
+
+            if (baseUrl.startsWith('content/')) {
+              newHref = newHref.replace(/^content\//, '');
+            }
+
             if (isImage)
                 link.attr(hrefAttribute, newHref);
             else if ($.md.util.isRelativePath (href))
@@ -478,9 +483,9 @@
         } else {
             href = window.location.hash.substring(1);
         }
-        href = "content/" + decodeURIComponent(href);
 
         // extract possible in-page anchor
+        href = "content/" + decodeURIComponent(href);
         var ex_pos = href.indexOf('#');
         if (ex_pos !== -1) {
             $.md.inPageAnchor = href.substring(ex_pos + 1);
