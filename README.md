@@ -1,4 +1,4 @@
-MDWiki modified by @elliptic\_shiho
+MDWiki v0.6.2 modified by @elliptic\_shiho
 =========
 
 **Caution: Almost all files are Modified Version from Original MDWiki!!**
