@@ -1,3 +1,22 @@
+MDWiki modified by @elliptic\_shiho
+=========
+
+**Caution: Almost all files are Modified Version from Original MDWiki!!**
+
+Disclaimer: Firstly, I modified this for personal use, so I didn't check licenses mathjax and mdwiki.
+If you want to use this, I don't responsible any problem of licenses.
+
+
+## Modified Point
+* Support MathJax (If you use it, you must place mathjax files at `/mathjax/MathJax.js` )
+* Changed Content files path ( `/content/hoge.md` -> `mdwiki.html#!/hoge.md` )
+* Don't use CDN at Theme Styles (e.g. To use `flatly` theme, You must place `/theme/flatly/~~~` then you can use  `[gimmick:Theme](flatly)` )
+  - TODO: Can use any themes
+
+Below is original readme:
+
+---
+
 [![Build Status](https://travis-ci.org/Dynalon/mdwiki.png?branch=master)](https://travis-ci.org/Dynalon/mdwiki)
 
 
