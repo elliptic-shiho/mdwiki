@@ -8,10 +8,12 @@ If you want to use this, I don't responsible any problem of licenses.
 
 
 ## Modified Point
-* Support MathJax (If you use it, you must place mathjax files at `/mathjax/MathJax.js` )
+* Support MathJax (If you use it, you must place mathjax files at `/mathjax/~~~` )
 * Changed Content files path ( `/content/hoge.md` -> `mdwiki.html#!/hoge.md` )
 * Don't use CDN at Theme Styles (e.g. To use `flatly` theme, You must place `/theme/flatly/~~~` then you can use  `[gimmick:Theme](flatly)` )
   - TODO: Can use any themes
+
+Deployment Example: https://github.com/elliptic-shiho/ctf-writeups
 
 Below is original readme:
 
